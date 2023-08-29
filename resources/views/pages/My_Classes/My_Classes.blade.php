@@ -94,7 +94,7 @@
                                 <?php $i++; ?>
                                 <td><input type="checkbox"  value="{{ $My_Class->id }}" class="box1" ></td>
                                 <td>{{ $i }}</td>
-                                <td>{{ $My_Class->name_class }}</td>
+                                <td>{{ $My_Class->name }}</td>
                                 <td>{{ $My_Class->grade->name }}</td>
                                 <td>
                                     <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
@@ -134,7 +134,7 @@
                                                             :</label>
                                                         <input id="name" type="text" name="name_class"
                                                                class="form-control"
-                                                               value="{{ $My_Class->getTranslation('name_class', 'ar') }}"
+                                                               value="{{ $My_Class->getTranslation('name', 'ar') }}"
                                                                required>
                                                         <input id="id" type="hidden" name="id" class="form-control"
                                                                value="{{ $My_Class->id }}">
@@ -144,7 +144,7 @@
                                                                class="mr-sm-2">{{ trans('My_Classes_trans.Name_class_en') }}
                                                             :</label>
                                                         <input type="text" class="form-control"
-                                                               value="{{ $My_Class->getTranslation('name_class', 'en') }}"
+                                                               value="{{ $My_Class->getTranslation('name', 'en') }}"
                                                                name="name_class_en" required>
                                                     </div>
                                                 </div><br>

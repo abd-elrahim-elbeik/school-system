@@ -18,22 +18,18 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
 
         \App\Models\User::create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'super_admin',
+            'email' => 'super_admin@app.cpm',
             'password' => 'password'
         ]);
 
         $this->call([
             BloodTableSeeder::class,
-        ]);
-
-
-        $this->call([
             NationalityTableSeeder::class,
+            ReligionTableSeeder::class,
+            GenderSeeder::class,
+            SpecializationSeeder::class,
         ]);
 
-        $this->call([
-            ReligionTableSeeder::class,
-        ]);
     }
 }

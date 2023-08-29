@@ -29,7 +29,7 @@
                     </div>
                 @endif
 
-                <form method="post"  action="{{ route('Students.store') }}" autocomplete="off" enctype="multipart/form-data">
+                <form method="post"  action="{{ route('students.store') }}" autocomplete="off" enctype="multipart/form-data">
                     @csrf
                     <h6 style="font-family: 'Cairo', sans-serif;color: blue">{{trans('Students_trans.personal_information')}}</h6><br>
                         <div class="row">
@@ -69,8 +69,8 @@
                                     <label for="gender">{{trans('Students_trans.gender')}} : <span class="text-danger">*</span></label>
                                     <select class="custom-select mr-sm-2" name="gender_id">
                                         <option selected disabled>{{trans('Parent_trans.Choose')}}...</option>
-                                        @foreach($Genders as $Gender)
-                                            <option  value="{{ $Gender->id }}">{{ $Gender->Name }}</option>
+                                        @foreach($genders as $gender)
+                                            <option  value="{{ $gender->id }}">{{ $gender->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -81,8 +81,8 @@
                                     <label for="nal_id">{{trans('Students_trans.Nationality')}} : <span class="text-danger">*</span></label>
                                     <select class="custom-select mr-sm-2" name="nationalitie_id">
                                         <option selected disabled>{{trans('Parent_trans.Choose')}}...</option>
-                                        @foreach($nationals as $nal)
-                                            <option  value="{{ $nal->id }}">{{ $nal->Name }}</option>
+                                        @foreach($nationalitys as $nationality)
+                                            <option  value="{{ $nationality->id }}">{{ $nationality->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -93,8 +93,8 @@
                                     <label for="bg_id">{{trans('Students_trans.blood_type')}} : </label>
                                     <select class="custom-select mr-sm-2" name="blood_id">
                                         <option selected disabled>{{trans('Parent_trans.Choose')}}...</option>
-                                        @foreach($bloods as $bg)
-                                            <option value="{{ $bg->id }}">{{ $bg->Name }}</option>
+                                        @foreach($type_bloods as $type_blood)
+                                            <option value="{{ $type_blood->id }}">{{ $type_blood->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -116,8 +116,8 @@
                                     <label for="Grade_id">{{trans('Students_trans.Grade')}} : <span class="text-danger">*</span></label>
                                     <select class="custom-select mr-sm-2" name="Grade_id">
                                         <option selected disabled>{{trans('Parent_trans.Choose')}}...</option>
-                                        @foreach($my_classes as $c)
-                                            <option  value="{{ $c->id }}">{{ $c->Name }}</option>
+                                        @foreach($grades as $grade)
+                                            <option  value="{{ $grade->id }}">{{ $grade->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>

@@ -2,21 +2,24 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\My_Parent;
+use App\Models\MyParent;
 use App\Models\Nationality;
+use App\Models\ParentAttachment;
 use App\Models\Religion;
 use App\Models\TypeBlood;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class AddParent extends Component
 {
+    use WithFileUploads;
 
     public $successMessage = '';
 
-    public $catchError,$updateMode = false,$photos,$show_table = true,$Parent_id;
+    public $catchError, $updateMode = false, $photos, $show_table = true, $Parent_id;
 
-    public $currentStep = 1,
+    public $currentStep = 1, //for tab in view
 
         // Father_INPUTS
         $Email, $Password,
@@ -36,7 +39,7 @@ class AddParent extends Component
 
     public function updated($propertyName)
     {
-        $this->validateOnly($propertyName, [
+        $this->validateOnly($propertyName, [ //for real time validate
             'Email' => 'required|email',
             'National_ID_Father' => 'required|string|min:10|max:10|regex:/[0-9]{9}/',
             'Passport_ID_Father' => 'min:10|max:10',
@@ -54,7 +57,7 @@ class AddParent extends Component
             'Nationalities' => Nationality::all(),
             'Type_Bloods' => TypeBlood::all(),
             'Religions' => Religion::all(),
-            'my_parents' => My_Parent::all(),
+            'my_parents' => MyParent::all(),
         ]);
 
     }
@@ -66,17 +69,17 @@ class AddParent extends Component
 
 
     //firstStepSubmit
-    public function firstStepSubmit()
+    public function firstStepSubmit() //father step
     {
        $this->validate([
-            'Email' => 'required|unique:my__parents,Email,'.$this->id,
+            'Email' => 'required|unique:my_parents,Email,'.$this->id,
             'Password' => 'required',
             'Name_Father' => 'required',
             'Name_Father_en' => 'required',
             'Job_Father' => 'required',
             'Job_Father_en' => 'required',
-            'National_ID_Father' => 'required|unique:my__parents,National_ID_Father,' . $this->id,
-            'Passport_ID_Father' => 'required|unique:my__parents,Passport_ID_Father,' . $this->id,
+            'National_ID_Father' => 'required|unique:my_parents,National_ID_Father,' . $this->id,
+            'Passport_ID_Father' => 'required|unique:my_parents,Passport_ID_Father,' . $this->id,
             'Phone_Father' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
             'Nationality_Father_id' => 'required',
             'Blood_Type_Father_id' => 'required',
@@ -84,7 +87,7 @@ class AddParent extends Component
             'Address_Father' => 'required',
         ]);
 
-        $this->currentStep = 2;
+        $this->currentStep = 2; //go to view tow
     }
 
     //secondStepSubmit
@@ -94,8 +97,8 @@ class AddParent extends Component
         $this->validate([
             'Name_Mother' => 'required',
             'Name_Mother_en' => 'required',
-            'National_ID_Mother' => 'required|unique:my__parents,National_ID_Mother,' . $this->id,
-            'Passport_ID_Mother' => 'required|unique:my__parents,Passport_ID_Mother,' . $this->id,
+            'National_ID_Mother' => 'required|unique:my_parents,National_ID_Mother,' . $this->id,
+            'Passport_ID_Mother' => 'required|unique:my_parents,Passport_ID_Mother,' . $this->id,
             'Phone_Mother' => 'required',
             'Job_Mother' => 'required',
             'Job_Mother_en' => 'required',
@@ -108,10 +111,10 @@ class AddParent extends Component
         $this->currentStep = 3;
     }
 
-    public function submitForm(){
+    public function submitForm(){ //put data in table database
 
         try {
-            $My_Parent = new My_Parent();
+            $My_Parent = new MyParent();
             // Father_INPUTS
             $My_Parent->Email = $this->Email;
             $My_Parent->Password = Hash::make($this->Password);
@@ -139,18 +142,20 @@ class AddParent extends Component
             $My_Parent->Address_Mother = $this->Address_Mother;
             $My_Parent->save();
 
-            // if (!empty($this->photos)){
-            //     foreach ($this->photos as $photo) {
-            //         $photo->storeAs($this->National_ID_Father, $photo->getClientOriginalName(), $disk = 'parent_attachments');
-            //         ParentAttachment::create([
-            //             'file_name' => $photo->getClientOriginalName(),
-            //             'parent_id' => My_Parent::latest()->first()->id,
-            //         ]);
-            //     }
-            // }
+            if (!empty($this->photos)){
+                foreach ($this->photos as $photo) {
+                    $photo->storeAs($this->National_ID_Father, $photo->getClientOriginalName(), $disk = 'parent_attachments');
+                    ParentAttachment::create([
+                        'file_name' => $photo->getClientOriginalName(),
+                        'parent_id' => MyParent::latest()->first()->id,
+                    ]);
+                }
+            }
+
             $this->successMessage = trans('messages.success');
-            $this->clearForm();
-            $this->currentStep = 1;
+
+            $this->clearForm();  //call function for clear input in form
+            $this->currentStep = 1; //back to step one
         }
 
         catch (\Exception $e) {
@@ -162,9 +167,9 @@ class AddParent extends Component
 
     public function edit($id)
     {
-        $this->show_table = false;
-        $this->updateMode = true;
-        $My_Parent = My_Parent::where('id',$id)->first();
+        $this->show_table = false; //hide table
+        $this->updateMode = true; //updatemode on
+        $My_Parent = MyParent::where('id',$id)->first();
         $this->Parent_id = $id;
         $this->Email = $My_Parent->Email;
         $this->Password = $My_Parent->Password;
@@ -212,7 +217,7 @@ class AddParent extends Component
     public function submitForm_edit(){
 
         if ($this->Parent_id){
-            $parent = My_Parent::find($this->Parent_id);
+            $parent = MyParent::find($this->Parent_id);
             $parent->update([
                 'Passport_ID_Father' => $this->Passport_ID_Father,
                 'National_ID_Father' => $this->National_ID_Father,
@@ -224,13 +229,13 @@ class AddParent extends Component
     }
 
     public function delete($id){
-        My_Parent::findOrFail($id)->delete();
+        MyParent::findOrFail($id)->delete();
         return redirect()->to('/add_parent');
     }
 
 
     //clearForm
-    public function clearForm()
+    public function clearForm() //for clear form
     {
         $this->Email = '';
         $this->Password = '';
@@ -262,7 +267,7 @@ class AddParent extends Component
 
 
     //back
-    public function back($step)
+    public function back($step) //for button back
     {
         $this->currentStep = $step;
     }

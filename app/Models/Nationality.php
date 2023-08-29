@@ -20,4 +20,10 @@ class Nationality extends Model
 
     }
 
+    public function students()
+    {
+        return $this->hasMany(Student::class);
+
+    }
+
 }

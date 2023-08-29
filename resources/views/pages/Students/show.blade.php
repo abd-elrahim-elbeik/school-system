@@ -43,25 +43,34 @@
                                             <th scope="row">{{trans('Students_trans.email')}}</th>
                                             <td>{{$Student->email}}</td>
                                             <th scope="row">{{trans('Students_trans.gender')}}</th>
-                                            <td>{{$Student->gender->Name}}</td>
+                                            <td>{{$Student->gender->name}}</td>
                                             <th scope="row">{{trans('Students_trans.Nationality')}}</th>
-                                            <td>{{$Student->Nationality->Name}}</td>
+                                            @foreach ($nationalities as $nationality)
+                                                @if ($Student->nationalitie_id == $nationality->id)
+                                                    <td>{{$nationality->name}}</td>
+                                                @endif
+                                            @endforeach
+
                                         </tr>
 
                                         <tr>
                                             <th scope="row">{{trans('Students_trans.Grade')}}</th>
-                                            <td>{{ $Student->grade->Name }}</td>
+                                            <td>{{ $Student->grade->name }}</td>
                                             <th scope="row">{{trans('Students_trans.classrooms')}}</th>
-                                            <td>{{$Student->classroom->Name_Class}}</td>
+                                            <td>{{$Student->classroom->name}}</td>
                                             <th scope="row">{{trans('Students_trans.section')}}</th>
-                                            <td>{{$Student->section->Name_Section}}</td>
+                                            <td>{{$Student->section->name}}</td>
                                             <th scope="row">{{trans('Students_trans.Date_of_Birth')}}</th>
-                                            <td>{{ $Student->Date_Birth}}</td>
+                                            <td>{{ $Student->date_birth}}</td>
                                         </tr>
 
                                         <tr>
                                             <th scope="row">{{trans('Students_trans.parent')}}</th>
-                                            <td>{{ $Student->myparent->Name_Father}}</td>
+                                            @foreach ($parents as $parent)
+                                                @if ($Student->parent_id == $parent->id)
+                                                    <td>{{$parent->Name_Father}}</td>
+                                                @endif
+                                            @endforeach
                                             <th scope="row">{{trans('Students_trans.academic_year')}}</th>
                                             <td>{{ $Student->academic_year }}</td>
                                             <th scope="row"></th>
@@ -107,7 +116,7 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            @foreach($Student->images as $attachment)
+                                            {{-- @foreach($Student->images as $attachment)
                                                 <tr style='text-align:center;vertical-align:middle'>
                                                     <td>{{$loop->iteration}}</td>
                                                     <td>{{$attachment->filename}}</td>
@@ -126,7 +135,7 @@
                                                     </td>
                                                 </tr>
                                                 @include('pages.Students.Delete_img')
-                                            @endforeach
+                                            @endforeach --}}
                                             </tbody>
                                         </table>
                                     </div>

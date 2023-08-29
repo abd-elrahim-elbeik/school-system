@@ -6,17 +6,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 
-class Classroom extends Model
+class Specialization extends Model
 {
     use HasFactory, HasTranslations;
 
-    protected $fillable = ['name'];
-
     public $translatable = ['name'];
+    protected $fillable =['name'];
 
-    public function grade()
+    public function teachers()
     {
-        return $this->belongsTo(Grade::class);
-    }
+        return $this->hasMany(Teacher::class);
 
+    }
 }
+

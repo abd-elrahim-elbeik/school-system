@@ -10,9 +10,9 @@ class Section extends Model
 {
     use HasFactory, HasTranslations;
 
-    protected $fillable=['name_section','status'];
+    protected $fillable=['name','status'];
 
-    public $translatable = ['name_section'];
+    public $translatable = ['name'];
 
 
     public function grade()
@@ -23,6 +23,11 @@ class Section extends Model
     public function classroom()
     {
         return $this->belongsTo(Classroom::class);
+    }
+
+    public function teachers()
+    {
+        return $this->belongsToMany(Teacher::class);
     }
 
 }

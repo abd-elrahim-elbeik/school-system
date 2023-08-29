@@ -1,6 +1,6 @@
-@if($currentStep != 1)
+@if($currentStep != 1) {{-- validate to hide the form --}}
     <div style="display: none" class="row setup-content" id="step-1">
-        @endif
+@endif
         <div class="col-xs-12">
             <div class="col-md-12">
                 <br>
@@ -133,7 +133,7 @@
                             type="button">{{trans('Parent_trans.Next')}}
                     </button>
                 @else
-                    <button class="btn btn-success btn-sm nextBtn btn-lg pull-right" wire:click="firstStepSubmit"
+                    <button class="btn btn-success btn-sm nextBtn btn-lg pull-right" wire:click="firstStepSubmit" {{-- whene click on button will go to the function firstStepSubmit --}}
                             type="button">{{trans('Parent_trans.Next')}}
                     </button>
                 @endif

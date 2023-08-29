@@ -14,7 +14,7 @@ class NationalityTableSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('nationalities')->delete();
+        // DB::table('nationalities')->delete();
 
         $nationals = [
 

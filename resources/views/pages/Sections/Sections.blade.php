@@ -71,8 +71,8 @@
                                                                     <tr>
                                                                         <?php $i++; ?>
                                                                         <td>{{ $i }}</td>
-                                                                        <td>{{ $list_Sections->name_section }}</td>
-                                                                        <td>{{ $list_Sections->classroom->name_class }}</td>
+                                                                        <td>{{ $list_Sections->name }}</td>
+                                                                        <td>{{ $list_Sections->classroom->name }}</td>
 
                                                                         <td>
                                                                             @if ($list_Sections->status == 1)
@@ -131,14 +131,14 @@
                                                                                                 <input type="text"
                                                                                                        name="name_section"
                                                                                                        class="form-control"
-                                                                                                       value="{{ $list_Sections->getTranslation('name_section', 'ar') }}">
+                                                                                                       value="{{ $list_Sections->getTranslation('name', 'ar') }}">
                                                                                             </div>
 
                                                                                             <div class="col">
                                                                                                 <input type="text"
                                                                                                        name="name_section_en"
                                                                                                        class="form-control"
-                                                                                                       value="{{ $list_Sections->getTranslation('name_section', 'en') }}">
+                                                                                                       value="{{ $list_Sections->getTranslation('name', 'en') }}">
                                                                                                 <input id="id"
                                                                                                        type="hidden"
                                                                                                        name="id"
@@ -178,7 +178,7 @@
                                                                                                     class="custom-select">
                                                                                                 <option
                                                                                                     value="{{ $list_Sections->classroom->id }}">
-                                                                                                    {{ $list_Sections->classroom->name_class }}
+                                                                                                    {{ $list_Sections->classroom->name }}
                                                                                                 </option>
                                                                                             </select>
                                                                                         </div>
@@ -208,13 +208,13 @@
                                                                                                     <div class="col">
                                                                                                         <label for="inputName" class="control-label">{{ trans('Sections_trans.Name_Teacher') }}</label>
                                                                                                         <select multiple name="teacher_id[]" class="form-control" id="exampleFormControlSelect2">
-                                                                                                            {{-- @foreach($list_Sections->teachers as $teacher)
-                                                                                                                <option selected value="{{$teacher['id']}}">{{$teacher['Name']}}</option>
-                                                                                                            @endforeach --}}
+                                                                                                            @foreach($list_Sections->teachers as $teacher)
+                                                                                                                <option selected value="{{$teacher['id']}}">{{$teacher['name']}}</option>
+                                                                                                            @endforeach
 
-                                                                                                            {{-- @foreach($teachers as $teacher)
-                                                                                                                <option value="{{$teacher->id}}">{{$teacher->Name}}</option>
-                                                                                                            @endforeach --}}
+                                                                                                            @foreach($teachers as $teacher)
+                                                                                                                <option value="{{$teacher->id}}">{{$teacher->name}}</option>
+                                                                                                            @endforeach
                                                                                                         </select>
                                                                                                     </div>
 
@@ -353,16 +353,16 @@
                                             <label for="inputName"
                                                    class="control-label">{{ trans('Sections_trans.Name_Class') }}</label>
                                             <select name="Class_id" class="custom-select">
-
+                                                
                                             </select>
                                         </div><br>
 
                                         <div class="col">
                                             <label for="inputName" class="control-label">{{ trans('Sections_trans.Name_Teacher') }}</label>
                                             <select multiple name="teacher_id[]" class="form-control" id="exampleFormControlSelect2">
-                                                {{-- @foreach($teachers as $teacher)
-                                                    <option value="{{$teacher->id}}">{{$teacher->Name}}</option>
-                                                @endforeach --}}
+                                                @foreach($teachers as $teacher)
+                                                    <option value="{{$teacher->id}}">{{$teacher->name}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
 

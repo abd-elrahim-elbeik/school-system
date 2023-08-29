@@ -1,9 +1,11 @@
 <?php
 
-use App\Http\Controllers\ClassroomController;
-use App\Http\Controllers\GradeController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SectionController;
+use App\Http\Controllers\Dashboard\ClassroomController;
+use App\Http\Controllers\Dashboard\GradeController;
+use App\Http\Controllers\Dashboard\ProfileController;
+use App\Http\Controllers\Dashboard\SectionController;
+use App\Http\Controllers\Dashboard\StudentController;
+use App\Http\Controllers\Dashboard\TeacherController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -38,7 +40,20 @@ function(){
 
     Route::resource('sections',SectionController::class);
 
+    Route::resource('teachers',TeacherController::class);
+
+    Route::resource('students',StudentController::class);
+
+    Route::post('Upload_attachment', 'StudentController@Upload_attachment')->name('Upload_attachment');
+    Route::get('Download_attachment/{studentsname}/{filename}', 'StudentController@Download_attachment')->name('Download_attachment');
+    Route::post('Delete_attachment', 'StudentController@Delete_attachment')->name('Delete_attachment');
+
+
+    //for ajax code
     Route::get('/classes/{id}',[SectionController::class,'getclasses']);
+    Route::get('/Get_classrooms/{id}', [StudentController::class,'Get_classrooms']);
+    Route::get('/Get_Sections/{id}', [StudentController::class,'Get_Sections']);
+
 
     Route::view('add_parent','livewire.show_Form');
 
