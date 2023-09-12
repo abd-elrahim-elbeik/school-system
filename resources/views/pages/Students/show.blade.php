@@ -116,14 +116,14 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            {{-- @foreach($Student->images as $attachment)
+                                            @foreach($Student->images as $attachment)
                                                 <tr style='text-align:center;vertical-align:middle'>
                                                     <td>{{$loop->iteration}}</td>
-                                                    <td>{{$attachment->filename}}</td>
+                                                    <td>{{$attachment->file_name}}</td>
                                                     <td>{{$attachment->created_at->diffForHumans()}}</td>
                                                     <td colspan="2">
                                                         <a class="btn btn-outline-info btn-sm"
-                                                           href="{{url('Download_attachment')}}/{{ $attachment->imageable->name }}/{{$attachment->filename}}"
+                                                           href="{{url('Download_attachment')}}/{{ $attachment->imageable->id }}/{{$attachment->file_name}}"
                                                            role="button"><i class="fas fa-download"></i>&nbsp; {{trans('Students_trans.Download')}}</a>
 
                                                         <button type="button" class="btn btn-outline-danger btn-sm"
@@ -135,7 +135,7 @@
                                                     </td>
                                                 </tr>
                                                 @include('pages.Students.Delete_img')
-                                            @endforeach --}}
+                                            @endforeach
                                             </tbody>
                                         </table>
                                     </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Image;
 use App\Models\MyParent;
 use App\Models\Nationality;
 use App\Models\ParentAttachment;
@@ -142,15 +143,22 @@ class AddParent extends Component
             $My_Parent->Address_Mother = $this->Address_Mother;
             $My_Parent->save();
 
-            if (!empty($this->photos)){
-                foreach ($this->photos as $photo) {
-                    $photo->storeAs($this->National_ID_Father, $photo->getClientOriginalName(), $disk = 'parent_attachments');
-                    ParentAttachment::create([
-                        'file_name' => $photo->getClientOriginalName(),
-                        'parent_id' => MyParent::latest()->first()->id,
-                    ]);
-                }
+            // insert img
+        if(!empty($this->photos))
+        {
+            foreach($this->photos as $photo)
+            {
+                $name = $photo->getClientOriginalName();
+                $photo->storeAs('attachments/parents/'.$My_Parent->id, $photo->getClientOriginalName(),'upload_attachments');
+
+                // insert in image_table
+                $images= new Image();
+                $images->file_name=$name;
+                $images->imageable_id= $My_Parent->id;
+                $images->imageable_type = 'App\Models\Parent';
+                $images->save();
             }
+        }
 
             $this->successMessage = trans('messages.success');
 

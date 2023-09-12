@@ -52,7 +52,7 @@ class StudentController extends Controller
             'name_ar' => 'required',
             'name_en' => 'required',
             'email' => 'required|email|unique:students,email',
-            'password' => 'required|string|min:6|max:10',
+            'password' => 'required|string|min:6',
             'gender_id' => 'required',
             'nationalitie_id' => 'required',
             'blood_id' => 'required',
@@ -63,9 +63,9 @@ class StudentController extends Controller
             'parent_id' => 'required',
             'academic_year' => 'required',
         ]);
-        // DB::beginTransaction();
+        DB::beginTransaction();
 
-        // try {
+        try {
         $students = new Student();
         $students->name = ['en' => $request->name_en, 'ar' => $request->name_ar];
         $students->email = $request->email;
@@ -82,31 +82,31 @@ class StudentController extends Controller
         $students->save();
 
         // insert img
-        // if($request->hasfile('photos'))
-        // {
-        //     foreach($request->file('photos') as $file)
-        //     {
-        //         $name = $file->getClientOriginalName();
-        //         $file->storeAs('attachments/students/'.$students->name, $file->getClientOriginalName(),'upload_attachments');
+        if($request->hasfile('photos'))
+        {
+            foreach($request->file('photos') as $file)
+            {
+                $name = $file->getClientOriginalName();
+                $file->storeAs('attachments/students/'.$students->id, $file->getClientOriginalName(),'upload_attachments');
 
-        //         // insert in image_table
-        //         $images= new Image();
-        //         $images->filename=$name;
-        //         $images->imageable_id= $students->id;
-        //         $images->imageable_type = 'App\Models\Student';
-        //         $images->save();
-        //     }
-        // }
-        // DB::commit(); // insert data
+                // insert in image_table
+                $images= new Image();
+                $images->file_name=$name;
+                $images->imageable_id= $students->id;
+                $images->imageable_type = 'App\Models\Student';
+                $images->save();
+            }
+        }
+        DB::commit(); // insert data
         toastr()->success(trans('messages.success'));
         return redirect()->route('students.index');
 
-        // }
+        }
 
-        // catch (\Exception $e){
-        //     DB::rollback();
-        //     return redirect()->back()->withErrors(['error' => $e->getMessage()]);
-        // }
+        catch (\Exception $e){
+            DB::rollback();
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -199,40 +199,40 @@ class StudentController extends Controller
         return $list_sections;
     }
 
-    public function Upload_attachment($request)
+    public function Upload_attachment(Request $request)
     {
         foreach($request->file('photos') as $file)
         {
             $name = $file->getClientOriginalName();
-            $file->storeAs('attachments/students/'.$request->student_name, $file->getClientOriginalName(),'upload_attachments');
+            $file->storeAs('attachments/students/'.$request->student_id, $file->getClientOriginalName(),'upload_attachments');
 
             // insert in image_table
             $images= new Image();
-            $images->filename=$name;
+            $images->file_name=$name;
             $images->imageable_id = $request->student_id;
             $images->imageable_type = 'App\Models\Student';
             $images->save();
         }
         toastr()->success(trans('messages.success'));
-        return redirect()->route('Students.show',$request->student_id);
+        return redirect()->route('students.show',$request->student_id);
     }
 
-    public function Download_attachment($studentsname, $filename)
+    public function Download_attachment($studentsid, $file_name)
     {
 
-        return response()->download(public_path('attachments/students/'.$studentsname.'/'.$filename));
+        return response()->download(public_path('attachments/students/'.$studentsid.'/'.$file_name));
 
     }
 
-    public function Delete_attachment($request)
+    public function Delete_attachment(Request $request)
     {
         // Delete img in server disk
-        Storage::disk('upload_attachments')->delete('attachments/students/'.$request->student_name.'/'.$request->filename);
+        Storage::disk('upload_attachments')->delete('attachments/students/'.$request->student_id.'/'.$request->file_name);
 
         // Delete in data
-        image::where('id',$request->id)->where('filename',$request->filename)->delete();
+        image::where('id',$request->id)->where('file_name',$request->file_name)->delete();
 
         toastr()->error(trans('messages.Delete'));
-        return redirect()->route('Students.show',$request->student_id);
+        return redirect()->route('students.show',$request->student_id);
     }
 }

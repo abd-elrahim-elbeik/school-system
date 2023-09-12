@@ -1,11 +1,18 @@
 <?php
 
 use App\Http\Controllers\Dashboard\ClassroomController;
+use App\Http\Controllers\Dashboard\FeeController;
+use App\Http\Controllers\Dashboard\FeesInvoiceController;
 use App\Http\Controllers\Dashboard\GradeController;
+use App\Http\Controllers\Dashboard\GraduatedController;
+use App\Http\Controllers\Dashboard\PaymentStudentController;
+use App\Http\Controllers\Dashboard\ProcessingFeeController;
 use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\Dashboard\SectionController;
 use App\Http\Controllers\Dashboard\StudentController;
 use App\Http\Controllers\Dashboard\TeacherController;
+use App\Http\Controllers\Dashboard\PromotionController;
+use App\Http\Controllers\Dashboard\ReceiptStudentsController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -44,9 +51,28 @@ function(){
 
     Route::resource('students',StudentController::class);
 
-    Route::post('Upload_attachment', 'StudentController@Upload_attachment')->name('Upload_attachment');
-    Route::get('Download_attachment/{studentsname}/{filename}', 'StudentController@Download_attachment')->name('Download_attachment');
-    Route::post('Delete_attachment', 'StudentController@Delete_attachment')->name('Delete_attachment');
+    Route::resource('promotion',PromotionController::class);
+
+    Route::resource('graduated',GraduatedController::class);
+
+    Route::resource('fees',FeeController::class);
+
+    Route::resource('fees_invoices',FeesInvoiceController::class);
+
+    Route::resource('receipt_students',ReceiptStudentsController::class);
+
+    Route::resource('ProcessingFee',ProcessingFeeController::class);
+
+    Route::resource('Payment_students',PaymentStudentController::class);
+
+
+
+
+
+
+    Route::post('Upload_attachment',[StudentController::class,'Upload_attachment'])->name('Upload_attachment');
+    Route::get('Download_attachment/{studentsid}/{filename}', [StudentController::class,'Download_attachment'])->name('Download_attachment');
+    Route::post('Delete_attachment', [StudentController::class,'Delete_attachment'])->name('Delete_attachment');
 
 
     //for ajax code

@@ -28,7 +28,7 @@
                             </button>
                         </div>
                     @endif
-                        <form action="{{route('Graduated.store')}}" method="post">
+                        <form action="{{route('graduated.store')}}" method="post">
                         @csrf
                         @csrf
                         <div class="form-row">
@@ -37,7 +37,7 @@
                                 <select class="custom-select mr-sm-2" name="Grade_id" required>
                                     <option selected disabled>{{trans('Parent_trans.Choose')}}...</option>
                                     @foreach($Grades as $Grade)
-                                        <option value="{{$Grade->id}}">{{$Grade->Name}}</option>
+                                        <option value="{{$Grade->id}}">{{$Grade->name}}</option>
                                     @endforeach
                                 </select>
                             </div>

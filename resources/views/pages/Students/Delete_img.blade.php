@@ -17,7 +17,7 @@
                     <input type="hidden" name="student_id" value="{{$attachment->imageable->id}}">
 
                     <h5 style="font-family: 'Cairo', sans-serif;">{{trans('Students_trans.Delete_attachment_tilte')}}</h5>
-                    <input type="text" name="filename" readonly value="{{$attachment->filename}}" class="form-control">
+                    <input type="text" name="file_name" readonly value="{{$attachment->file_name}}" class="form-control">
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">{{trans('Students_trans.Close')}}</button>
