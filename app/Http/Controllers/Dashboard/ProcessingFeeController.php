@@ -66,7 +66,7 @@ class ProcessingFeeController extends Controller
     public function show(string $id)
     {
         $student = Student::findorfail($id);
-        return view('pages.ProcessingFee.add',compact('student'));
+        return view('pages.ProcessingFee.create',compact('student'));
     }
 
     /**

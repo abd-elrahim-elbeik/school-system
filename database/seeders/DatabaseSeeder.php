@@ -7,6 +7,7 @@ namespace Database\Seeders;
 use App\Models\Nationality;
 use App\Models\TypeBlood;
 use Illuminate\Database\Seeder;
+use SettingsTableSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -29,6 +30,7 @@ class DatabaseSeeder extends Seeder
             ReligionTableSeeder::class,
             GenderSeeder::class,
             SpecializationSeeder::class,
+            SettingsTableSeeder::class,
         ]);
 
     }

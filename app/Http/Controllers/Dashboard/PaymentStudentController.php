@@ -76,7 +76,7 @@ class PaymentStudentController extends Controller
     public function show(string $id)
     {
         $student = Student::findorfail($id);
-        return view('pages.Payment.add',compact('student'));
+        return view('pages.Payment.create',compact('student'));
 
     }
 

@@ -82,7 +82,7 @@ class FeesInvoiceController extends Controller
         $student = Student::findorfail($id);
         $fees = Fee::where('classroom_id',$student->classroom_id)->get();
 
-        return view('pages.Fees_Invoices.add',compact('student','fees'));
+        return view('pages.Fees_Invoices.create',compact('student','fees'));
     }
 
     /**
@@ -133,7 +133,7 @@ class FeesInvoiceController extends Controller
     public function destroy(Request $request)
     {
         try {
-            
+
             Fee_invoice::destroy($request->id);
 
             toastr()->error(trans('messages.Delete'));

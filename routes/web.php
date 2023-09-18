@@ -1,10 +1,13 @@
 <?php
 
+use App\Http\Controllers\Dashboard\AttendanceController;
 use App\Http\Controllers\Dashboard\ClassroomController;
 use App\Http\Controllers\Dashboard\FeeController;
 use App\Http\Controllers\Dashboard\FeesInvoiceController;
 use App\Http\Controllers\Dashboard\GradeController;
 use App\Http\Controllers\Dashboard\GraduatedController;
+use App\Http\Controllers\Dashboard\LibraryController;
+use App\Http\Controllers\Dashboard\OnlineClasseController;
 use App\Http\Controllers\Dashboard\PaymentStudentController;
 use App\Http\Controllers\Dashboard\ProcessingFeeController;
 use App\Http\Controllers\Dashboard\ProfileController;
@@ -12,7 +15,11 @@ use App\Http\Controllers\Dashboard\SectionController;
 use App\Http\Controllers\Dashboard\StudentController;
 use App\Http\Controllers\Dashboard\TeacherController;
 use App\Http\Controllers\Dashboard\PromotionController;
+use App\Http\Controllers\Dashboard\QuestionController;
+use App\Http\Controllers\Dashboard\QuizzeController;
 use App\Http\Controllers\Dashboard\ReceiptStudentsController;
+use App\Http\Controllers\Dashboard\SettingController;
+use App\Http\Controllers\Dashboard\SubjectController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -65,10 +72,26 @@ function(){
 
     Route::resource('Payment_students',PaymentStudentController::class);
 
+    Route::resource('attendance',AttendanceController::class);
+
+    Route::resource('subjects',SubjectController::class);
+
+    Route::resource('quizzes',QuizzeController::class);
+
+    Route::resource('questions',QuestionController::class);
+
+    Route::resource('online_classes',OnlineClasseController::class);
+
+    Route::resource('library',LibraryController::class);
+
+    Route::resource('settings', SettingController::class);
 
 
 
 
+
+
+    Route::get('download_file/{filename}', [LibraryController::class,'downloadAttachment'])->name('downloadAttachment');
 
     Route::post('Upload_attachment',[StudentController::class,'Upload_attachment'])->name('Upload_attachment');
     Route::get('Download_attachment/{studentsid}/{filename}', [StudentController::class,'Download_attachment'])->name('Download_attachment');

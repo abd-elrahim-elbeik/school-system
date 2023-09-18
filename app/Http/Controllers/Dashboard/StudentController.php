@@ -40,7 +40,7 @@ class StudentController extends Controller
         $type_bloods = TypeBlood::all();
         $grades = Grade::all();
 
-        return view('pages.Students.add', compact('genders', 'parents', 'nationalitys', 'type_bloods', 'grades'));
+        return view('pages.Students.create', compact('genders', 'parents', 'nationalitys', 'type_bloods', 'grades'));
     }
 
     /**
@@ -229,7 +229,7 @@ class StudentController extends Controller
         // Delete img in server disk
         Storage::disk('upload_attachments')->delete('attachments/students/'.$request->student_id.'/'.$request->file_name);
 
-        // Delete in data
+        // Delete in data table
         image::where('id',$request->id)->where('file_name',$request->file_name)->delete();
 
         toastr()->error(trans('messages.Delete'));
