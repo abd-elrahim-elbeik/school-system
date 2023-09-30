@@ -186,18 +186,7 @@ class StudentController extends Controller
         return redirect()->route('students.index');
     }
 
-    public function Get_classrooms($id)
-    {
-        $list_classes = Classroom::where("grade_id", $id)->pluck("name", "id");
-        return $list_classes;
-    }
-
-    public function Get_Sections($id)
-    {
-
-        $list_sections = Section::where("classroom_id", $id)->pluck("name", "id");
-        return $list_sections;
-    }
+  
 
     public function Upload_attachment(Request $request)
     {

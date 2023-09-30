@@ -30,4 +30,14 @@ class Quizze extends Model
         return $this->belongsTo(Section::class);
     }
 
+    public function subject()
+    {
+        return $this->belongsTo(Subject::class);
+    }
+
+    public function degrees()
+    {
+        return $this->hasMany(Degree::class);
+    }
+
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Dashboard\AttendanceController;
 use App\Http\Controllers\Dashboard\ClassroomController;
 use App\Http\Controllers\Dashboard\FeeController;
@@ -10,7 +11,7 @@ use App\Http\Controllers\Dashboard\LibraryController;
 use App\Http\Controllers\Dashboard\OnlineClasseController;
 use App\Http\Controllers\Dashboard\PaymentStudentController;
 use App\Http\Controllers\Dashboard\ProcessingFeeController;
-use App\Http\Controllers\Dashboard\ProfileController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Dashboard\SectionController;
 use App\Http\Controllers\Dashboard\StudentController;
 use App\Http\Controllers\Dashboard\TeacherController;
@@ -20,6 +21,7 @@ use App\Http\Controllers\Dashboard\QuizzeController;
 use App\Http\Controllers\Dashboard\ReceiptStudentsController;
 use App\Http\Controllers\Dashboard\SettingController;
 use App\Http\Controllers\Dashboard\SubjectController;
+use App\Http\Controllers\Home\HomeController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -34,9 +36,19 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/',[HomeController::class,'index'])->name('selection');
+
+Route::get('/dashboard',[HomeController::class,'dashboard'])->name('dashboard');
+
+
+Route::get('/login/{type}',[LoginController::class,'loginForm'])->middleware('guest')->name('login.show');
+
+Route::post('/login',[LoginController::class,'login'])->name('login');
+
+Route::get('/logout/{type}', [LoginController::class,'logout'])->name('logout');
+
+
+
 
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
@@ -88,23 +100,14 @@ function(){
 
 
 
-
-
-
     Route::get('download_file/{filename}', [LibraryController::class,'downloadAttachment'])->name('downloadAttachment');
-
     Route::post('Upload_attachment',[StudentController::class,'Upload_attachment'])->name('Upload_attachment');
     Route::get('Download_attachment/{studentsid}/{filename}', [StudentController::class,'Download_attachment'])->name('Download_attachment');
     Route::post('Delete_attachment', [StudentController::class,'Delete_attachment'])->name('Delete_attachment');
 
 
-    //for ajax code
-    Route::get('/classes/{id}',[SectionController::class,'getclasses']);
-    Route::get('/Get_classrooms/{id}', [StudentController::class,'Get_classrooms']);
-    Route::get('/Get_Sections/{id}', [StudentController::class,'Get_Sections']);
 
-
-    Route::view('add_parent','livewire.show_Form');
+    Route::view('add_parent','livewire.show_Form')->name('add_parent');
 
 
 
@@ -113,11 +116,11 @@ function(){
 
 
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+// Route::middleware('auth')->group(function () {
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// });
 
 
 

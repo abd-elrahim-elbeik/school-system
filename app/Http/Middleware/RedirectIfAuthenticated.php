@@ -17,12 +17,20 @@ class RedirectIfAuthenticated
      */
     public function handle(Request $request, Closure $next, string ...$guards): Response
     {
-        $guards = empty($guards) ? [null] : $guards;
+        if (auth('web')->check()) {
+            return redirect(RouteServiceProvider::HOME);
+        }
 
-        foreach ($guards as $guard) {
-            if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
-            }
+        if (auth('student')->check()) {
+            return redirect(RouteServiceProvider::STUDENT);
+        }
+
+        if (auth('teacher')->check()) {
+            return redirect(RouteServiceProvider::TEACHER);
+        }
+
+        if (auth('parent')->check()) {
+            return redirect(RouteServiceProvider::PARENT);
         }
 
         return $next($request);

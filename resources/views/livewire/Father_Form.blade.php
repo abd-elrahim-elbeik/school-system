@@ -7,15 +7,15 @@
                 <div class="form-row">
                     <div class="col">
                         <label for="title">{{trans('Parent_trans.Email')}}</label>
-                        <input type="email" wire:model="Email"  class="form-control">
-                        @error('Email')
+                        <input type="email" wire:model="email"  class="form-control">
+                        @error('email')
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="col">
                         <label for="title">{{trans('Parent_trans.Password')}}</label>
-                        <input type="password" wire:model="Password" class="form-control" >
-                        @error('Password')
+                        <input type="password" wire:model="password" class="form-control" >
+                        @error('password')
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
